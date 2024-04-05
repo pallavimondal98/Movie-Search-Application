@@ -51,7 +51,7 @@ const MovieDetails = () => {
                                 <div className='flex gap-4'>
                                     <h3 className='text-gray-400 text-base'>{movieDetails.Runtime}</h3>
                                     <h3 className='text-gray-400 text-base'>{movieDetails.Country}</h3>
-                                    <h3 className='text-gray-400 text-base' ><i class="fa-solid fa-star" style={{ color: "#f40679" }}></i> {movieDetails.imdbRating}</h3>
+                                    <h3 className='text-gray-400 text-base' ><i className="fa-solid fa-star" style={{ color: "#f40679" }}></i> {movieDetails.imdbRating}</h3>
                                 </div>
 
                                 <div className='grid gap-20'>

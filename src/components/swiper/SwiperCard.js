@@ -11,7 +11,7 @@ const SwiperCard = () => {
 
   const fetchMovieData = async () => {
     try {
-      const response = await fetch(`https://omdbapi.com/?s=love&page=2&apikey=${process.env.REACT_APP_API_KEY}`);
+      const response = await fetch(`https://omdbapi.com/?s=love&page=1&apikey=${process.env.REACT_APP_API_KEY}`);
       const data = await response.json();
       setMovie(data.Search);
     } catch (error) {

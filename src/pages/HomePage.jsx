@@ -11,7 +11,7 @@ const HomePage = () => {
 
   return (
     <div className=' bg-slate-900 h-auto w-full'>
-      <Header className='md:w-svw' />
+      <Header />
       <Banner />
       <SwiperCard />
       <Allmovies/>

@@ -18,10 +18,11 @@ const LandingPage = () => {
                         <h1 className='text-white text-6xl font-bold text-center'>Unlimited movies, TV shows and more</h1>
                         <h3 className='text-white text-4xl p-4 pt-5 sm:justify-center'>Watch anywhere. Cancel anytime.</h3>
                         <div className='flex p-6'>
-                            <h2 className='text-white text-3xl pr-2 text-center'>Ready to watch?</h2> <Link to='/home'><button className='text-white relative text-2xl bg-red-700 text-center p-2 rounded-lg font-medium cursor-pointer z-10'>Get Started</button>
+                            <h2 className='text-white text-3xl pr-2 text-center'>Ready to watch?</h2> 
+                            <Link to='/home'>
+                                <button className='text-white relative text-2xl bg-red-700 text-center p-2 rounded-lg font-medium cursor-pointer z-10'>Get Started</button>
                             </Link>
                         </div>
-
                     </div>
                 </div>
             </div>

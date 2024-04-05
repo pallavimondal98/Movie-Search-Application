@@ -8,33 +8,16 @@ import { SearchIcon } from '@heroicons/react/outline';
 const Header = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+    const [loading, setLoading] = useState(false);
 
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
     };
 
-    // useEffect(() => {
-    //     const delayDebounceFn = setTimeout(() => {
-    //         if (searchTerm) {
-    //             const searchUrl = `https://omdbapi.com/?s=${searchTerm}&apikey=${apikey}`;
-    //             axios
-    //                 .get(searchUrl)
-    //                 .then(response => {
-    //                     setSearchResults(Array.isArray(response.data.Search) ? response.data.Search : []);
-    //                 })
-    //                 .catch(error => {
-    //                     console.error('Error fetching data:', error);
-    //                 });
-    //         } else {
-    //             setSearchResults([]);
-    //         }
-    //     }, 500);
-    //     return () => clearTimeout(delayDebounceFn);
-    // }, [searchTerm]);
-
     useEffect(() => {
         const fetchMovies = async () => {
+            setLoading(true);
             let allMovies = [];
             for (let page = 1; page <= 100; page++) {
                 const searchUrl = `https://omdbapi.com/?s=${searchTerm}&page=${page}&apikey=${process.env.REACT_APP_API_KEY}`;
@@ -54,12 +37,14 @@ const Header = () => {
                 }
             }
             setSearchResults(allMovies);
+            setLoading(false);
         };
     
         if (searchTerm) {
             fetchMovies();
         } else {
             setSearchResults([]);
+            setLoading(false);
         }
     }, [searchTerm]);
 
@@ -80,6 +65,7 @@ const Header = () => {
                             onChange={handleSearchChange}
                         />
                         <SearchIcon className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+                        {loading && <div className="absolute inset-0 bg-gray-100 bg-opacity-50 flex justify-center items-center">Loading...</div>}
                         {searchResults.length > 0 && (
                             <div className="search-results-container text-white mt-1 overflow-y-scroll bg-gradient-to-r from-red-400 p-2 rounded-lg absolute h-96 w-full z-10">
                                 {searchResults.map((movie) => (
