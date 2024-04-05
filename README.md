@@ -1,71 +1,96 @@
-# Getting Started with Create React App
+# Movie Search App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a movie search application built with React. It allows users to search for movies, view detailed information about each movie, and browse a collection of English movies using a swiper carousel.
 
-## Available Scripts
+## Folder Structure
 
-In the project directory, you can run:
+```
+📁 movie-search-app
+├── .env
+├── .gitignore
+├── package-lock.json
+├── package.json
+├── 📁 public
+│   ├── favicon.ico
+│   ├── index.html
+│   ├── logo192.png
+│   ├── logo512.png
+│   ├── manifest.json
+│   ├── robots.txt
+│   └── _redirects
+├── README.md
+├── 📁 src
+│   ├── App.css
+│   ├── App.js
+│   ├── App.test.js
+│   ├── 📁 components
+│   │   ├── 📁 allMovies
+│   │   │   └── Allmovies.jsx
+│   │   ├── 📁 banner
+│   │   │   └── Banner.jsx
+│   │   ├── 📁 cardModel
+│   │   │   └── CardModel.jsx
+│   │   ├── 📁 footer
+│   │   │   └── Footer.js
+│   │   ├── 📁 Header
+│   │   │   └── Header.jsx
+│   │   ├── 📁 movieDetails
+│   │   │   └── MovieDetails.jsx
+│   │   └── 📁 swiper
+│   │       └── SwiperCard.js
+│   ├── 📁 img
+│   │   ├── netflip.png
+│   │   └── netflip2.png
+│   ├── index.css
+│   ├── index.js
+│   ├── logo.svg
+│   ├── 📁 pages
+│   │   ├── HomePage.jsx
+│   │   ├── LandingPage.jsx
+│   │   └── Movies.jsx
+│   ├── reportWebVitals.js
+│   └── setupTests.js
+└── tailwind.config.js
+```
 
-### `npm start`
+## Instructions
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Clone the Repository
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```bash
+git clone <repository_url>
+cd movie-search-app
+```
 
-### `npm test`
+### Install Node Modules
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+npm install
+```
 
-### `npm run build`
+### Run the Project
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Fetching Data from API and Destructuring
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Data is fetched from the OMDB API using the Axios library. The `fetchAllMovies` function in the `Allmovies.jsx` component fetches data for all movies, while the `fetchMovieDetailedData` function in the `MovieDetails.jsx` component fetches detailed data for a specific movie. The fetched data is then destructured and used to populate the UI components.
 
-### `npm run eject`
+## Tech Stack Used
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- React
+- React Router DOM
+- Axios
+- Material-UI
+- Swiper
+- Tailwind CSS
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Learnings from this Project
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-"# Movie-Search-Application" 
+- Building a responsive UI with React components
+- Fetching and displaying data from an API
+- Routing and navigation using React Router DOM
+- Working with third-party libraries like Swiper and Material-UI
+- Using Tailwind CSS for styling and layout
