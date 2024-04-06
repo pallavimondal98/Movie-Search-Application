@@ -13,7 +13,7 @@ const Allmovies = () => {
 
     const fetchAllMovies = async (page) => {
         setLoading(true);
-        
+
         try {
             const response = await fetch(`https://www.omdbapi.com/?s=movie&page=${page}&apikey=${process.env.REACT_APP_API_KEY}`);
             const data = await response.json();
@@ -38,25 +38,37 @@ const Allmovies = () => {
 
     return (
         <div className='text-white h-auto w-full'>
-            <h1 className=' font-bold text-3xl mb-3 p-7'>All Movies</h1>
+            <div>
+               <h1 className=' font-bold text-3xl mb-3 p-7'>All Movies</h1> 
+            </div>
+            
             {loading ? (
-              <p>Loading...</p>
+                <p>Loading...</p>
             ) : (
-              <div className='grid grid-cols-2 md:grid-cols-4 sm:grid-cols-3 gap-4 m-4'>
-                {movies.map((card, index) => (<CardModel key={index} card={card} />))}
-              </div>
+                <div className='grid grid-cols-2 md:grid-cols-4 sm:grid-cols-3 gap-4 m-4'>
+                    {movies.map((card, index) => (<CardModel key={index} card={card} />))}
+                </div>
             )}
             <Stack spacing={2}>
-                <Pagination 
-                style={{
-                    display:'flex',
-                    justifyContent:'center',
-                    background:'gray'
-                }}
-                onChange={handleChange}
-                count={totalPages} 
-                page={currentPage} 
-                color="secondary" />
+                <Pagination
+                    className='bg-transparent'
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                    }}
+                    onChange={handleChange}
+                    count={totalPages}
+                    page={currentPage}
+                    color="secondary"
+                    sx={{
+                        '& .MuiPaginationItem-root': {
+                            color: 'white', // Changes the text color to white
+                        },
+                        '& .MuiPaginationItem-icon': {
+                            color: 'white', // Ensures icons (like arrows) are also white
+                        }
+                    }}
+                />
             </Stack>
         </div>
     )

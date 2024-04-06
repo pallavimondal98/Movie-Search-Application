@@ -56,6 +56,7 @@ const Header = () => {
                     <Link to="/" className="col-span-2 md:col-span-1">
                         <img className=" h-11" src={logo} alt="Logo" />
                     </Link>
+                    {/* <button className='bg-white w-6'>All</button> */}
                     <div className="relative col-span-2 md:col-span-1 md:flex-grow">
                         <input
                             type="text"
