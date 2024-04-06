@@ -5,20 +5,19 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import CardModel from '../cardModel/CardModel';
 const SwiperCard = () => {
+  const [movie, setMovie] = useState([]);  // State for storing movie data
 
-
-  const [movie, setMovie] = useState([]);;
-
-  const fetchMovieData = async () => {
+  const fetchMovieData = async () => { // Function to fetch movie data
     try {
-      const response = await fetch(`https://omdbapi.com/?s=love&page=1&apikey=${process.env.REACT_APP_API_KEY}`);
+      const response = await fetch(`https://omdbapi.com/?s=fight&page=1&apikey=${process.env.REACT_APP_API_KEY}`);
       const data = await response.json();
-      setMovie(data.Search);
+      setMovie(data.Search); // Set movie state with search results
     } catch (error) {
       console.log(error.message);
     }
   }
 
+  // useEffect to fetch movie data on component mount
   useEffect(() => {
     fetchMovieData()
   }, [])

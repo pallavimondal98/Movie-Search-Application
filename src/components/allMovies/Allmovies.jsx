@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react'
 import CardModel from '../cardModel/CardModel'
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import { Link } from 'react-router-dom';
 
 // console.log(process.env);
 const Allmovies = () => {
+    ;
 
     const [movies, setMovies] = useState([]); // State for storing movies and its setter
     const [loading, setLoading] = useState(false) // State for loading status
@@ -16,7 +18,7 @@ const Allmovies = () => {
 
         // Try catch block for error handling
         try {
-            const response = await fetch(`https://www.omdbapi.com/?s=movie&page=${page}&apikey=${process.env.REACT_APP_API_KEY}`);
+            const response = await fetch(`https://www.omdbapi.com/?s=after&page=${page}&apikey=${process.env.REACT_APP_API_KEY}`);
             const data = await response.json();
             if (data.Response === 'True' && data.Search !== null) {
                 setMovies(data.Search);
@@ -49,7 +51,9 @@ const Allmovies = () => {
                 <p>Loading...</p>
             ) : (
                 <div className='grid grid-cols-2 md:grid-cols-4 sm:grid-cols-3 gap-4 m-4'>
-                    {movies.map((card, index) => (<CardModel key={index} card={card} />))}
+                    {movies.map((card, index) => (
+                    <Link to={`/movie/${card.imdbID}`} key={card.imdbID}><CardModel key={index} card={card} /></Link>
+                    ))}
                 </div>
             )}
             <Stack spacing={2}>

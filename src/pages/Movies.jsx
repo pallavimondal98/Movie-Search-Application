@@ -5,6 +5,7 @@ import Stack from '@mui/material/Stack';
 import Header from '../components/Header/Header'
 import Footer from '../components/footer/Footer'
 import CardModel from '../components/cardModel/CardModel';
+import { Link } from 'react-router-dom';
 
 // Debounce function to limit the rate
 function useDebounce(value, delay) {
@@ -45,7 +46,7 @@ const Movies = () => {
     }
   }, [currentPage, contentType, debouncedSearchTitle]);  // Dependency array
 
-  const fetchAllMovies = async (page,contentType='movie') => {
+  const fetchAllMovies = async (page, contentType = 'movie') => {
     setLoading(true);
     let url = `https://www.omdbapi.com/?s=${searchTitle}&page=${page}&apikey=${process.env.REACT_APP_API_KEY}`;
     if (contentType !== 'both') {
@@ -68,7 +69,7 @@ const Movies = () => {
   // useEffect(() => {
   //   setCurrentPage(1); // Resets the current page to 1 when the search title changes.
   // }, [searchTitle]);
-  
+
   useEffect(() => {
     fetchAllMovies(currentPage, contentType, searchTitle);
   }, [currentPage, contentType, searchTitle]);
@@ -82,35 +83,41 @@ const Movies = () => {
     setContentType('movie');
     setCurrentPage(1); // This will trigger to refetch movies with page 1
   };
-  
+
   const handleTVSeriesClick = () => {
     setContentType('series');
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   const handleAllClick = () => {
     setContentType('both');
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   return (
     <div className='bg-slate-900'>
       <Header />
       <div className='text-white h-auto w-full'>
-        <div className='flex m-7 '>
-          <h1 className=' font-bold text-3xl mr-4 '>All Movies</h1>
-          <input
-            type="text"
-            placeholder="Search for a movie"
-            className="text-gray-400 py-2 pl-10 pr-4 rounded-lg border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none"
-            value={searchTitle}
-            onChange={handleSearchChange}
-          />
-          <SearchIcon className="absolute h-5 w-5 top-[115px] left-[199px] text-gray-400" />
-          <button className=' mx-4 px-6 border border-yellow-200 rounded-full  hover:bg-slate-700  active:bg-red-700 focus:outline-none focus:ring focus:ring-violet-300'  onClick={handleAllClick}>All</button>
-          <button className=' px-3 border border-yellow-200 rounded-full  hover:bg-slate-700  active:bg-red-700 focus:outline-none focus:ring focus:ring-violet-300' onClick={handleMoviesClick}>Movies</button>
-          <button className=' ml-4 px-3 border border-yellow-200 rounded-full  hover:bg-slate-700  active:bg-red-700 focus:outline-none focus:ring focus:ring-violet-300'  onClick={handleTVSeriesClick}>Series</button>
-          
+        <div className='grid md:flex m-7 '>
+          <div className='flex'>
+            <h1 className=' font-bold md:text-3xl w-32 md:w-44 text-xl mr-0 md:mr-4 '>All Movies</h1>
+            <input
+              type="text"
+              placeholder="Search for a movie"
+              className="text-gray-400 py-2 pl-10 pr-4 rounded-lg border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none md:w-48"
+              value={searchTitle}
+              onChange={handleSearchChange}
+            />
+            <SearchIcon className="absolute h-5 w-5 top-[209px] left-[158px] md:top-[115px] md:left-[227px] text-gray-400" />
+          </div>
+
+          <div className='flex mt-3'>
+            <button className=' mx-4 px-6 border border-yellow-200 rounded-full  hover:bg-slate-700  active:bg-red-700 focus:outline-none focus:ring focus:ring-violet-300' onClick={handleAllClick}>All</button>
+            <button className=' px-3 border border-yellow-200 rounded-full  hover:bg-slate-700  active:bg-red-700 focus:outline-none focus:ring focus:ring-violet-300' onClick={handleMoviesClick}>Movies</button>
+            <button className=' ml-4 px-3 border border-yellow-200 rounded-full  hover:bg-slate-700  active:bg-red-700 focus:outline-none focus:ring focus:ring-violet-300' onClick={handleTVSeriesClick}>Series</button>
+          </div>
+
+
         </div>
 
 
@@ -118,7 +125,9 @@ const Movies = () => {
           <p>Loading...</p>
         ) : (
           <div className='grid grid-cols-2 md:grid-cols-4 sm:grid-cols-3 gap-4 m-4'>
-            {movies.map((card, index) => (<CardModel key={index} card={card} />))}
+            {movies.map((card, index) => (
+              <Link to={`/movie/${card.imdbID}`} key={card.imdbID}><CardModel key={index} card={card} /></Link>
+            ))}
           </div>
         )}
         <Stack spacing={2}>
