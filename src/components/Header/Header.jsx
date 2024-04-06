@@ -6,44 +6,46 @@ import { SearchIcon } from '@heroicons/react/outline';
 
 
 const Header = () => {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');  // State for storing the search term
+    const [searchResults, setSearchResults] = useState([]); // State for storing search results
     const [loading, setLoading] = useState(false);
 
-
+    // Handler for search input changes
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
     };
-
+    // Effect hook to fetch movies based on search term
     useEffect(() => {
         const fetchMovies = async () => {
             setLoading(true);
-            let allMovies = [];
+            let allMovies = []; // Initialize array to store all movies
             for (let page = 1; page <= 100; page++) {
                 const searchUrl = `https://omdbapi.com/?s=${searchTerm}&page=${page}&apikey=${process.env.REACT_APP_API_KEY}`;
                 try {
                     const response = await axios.get(searchUrl);
                     const movies = response.data.Search;
+
+                    // Initialize array to store all movies
                     if (movies && movies.length > 0) {
                         allMovies = allMovies.concat(movies);
                     } else {
-                        // Break the loop if there are no movies in the response, assuming we've reached the end of available data
+                        // Break the loop if there are no movies in the response
                         break;
                     }
                 } catch (error) {
                     console.error('Error fetching data:', error);
-                    // Optionally break or continue based on how you want to handle errors (e.g., rate limits)
                     break;
                 }
             }
-            setSearchResults(allMovies);
+            setSearchResults(allMovies); // Update search results state
             setLoading(false);
         };
     
+         // Fetch movies if searchTerm is not empty
         if (searchTerm) {
             fetchMovies();
         } else {
-            setSearchResults([]);
+            setSearchResults([]);  // Clear search results if searchTerm is empty
             setLoading(false);
         }
     }, [searchTerm]);
@@ -56,7 +58,6 @@ const Header = () => {
                     <Link to="/" className="col-span-2 md:col-span-1">
                         <img className=" h-11" src={logo} alt="Logo" />
                     </Link>
-                    {/* <button className='bg-white w-6'>All</button> */}
                     <div className="relative col-span-2 md:col-span-1 md:flex-grow">
                         <input
                             type="text"

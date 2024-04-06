@@ -6,46 +6,57 @@ import Header from '../components/Header/Header'
 import Footer from '../components/footer/Footer'
 import CardModel from '../components/cardModel/CardModel';
 
+// Debounce function to limit the rate
+function useDebounce(value, delay) {
+  const [debouncedValue, setDebouncedValue] = useState(value);// State to hold the debounced value
+
+  useEffect(() => {
+    const handler = setTimeout(() => {   // Sets a timeout to update the debounced value after the specified delay.
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler); // Clears the timeout if the component is unmounted or the value/delay changes.
+    };
+  }, [value, delay]);
+
+  return debouncedValue;  // Returns the current debounced value.
+}
+
 
 const Movies = () => {
 
-  const [movies, setMovies] = useState([]);
-  const [searchTitle, setSearchTitle] = useState('thor');
-  const [contentType, setContentType] = useState('movie');
+  const [movies, setMovies] = useState([]); // State to hold the list of movies.
+  const [searchTitle, setSearchTitle] = useState('thor'); // State to hold the current search title, default is 'thor'.
+  const [contentType, setContentType] = useState('both'); // State to hold the type of content to fetch, default is 'both'.
   const [loading, setLoading] = useState(false)
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1); // State to hold the current page number.
+  const [totalPages, setTotalPages] = useState(0); // State to hold the total number of pages.
 
   const handleSearchChange = (event) => {
-    setSearchTitle(event.target.value);
+    setSearchTitle(event.target.value);  // Updates the search title based on user input.
   };
+
+  const debouncedSearchTitle = useDebounce(searchTitle, 500); // Debounce searchTitle
+
+  useEffect(() => {
+    if (debouncedSearchTitle) {
+      fetchAllMovies(currentPage, contentType);  // Fetches movies if there's a debounced search title.
+    }
+  }, [currentPage, contentType, debouncedSearchTitle]);  // Dependency array
 
   const fetchAllMovies = async (page,contentType='movie') => {
     setLoading(true);
     let url = `https://www.omdbapi.com/?s=${searchTitle}&page=${page}&apikey=${process.env.REACT_APP_API_KEY}`;
     if (contentType !== 'both') {
-      url += `&type=${contentType}`;
+      url += `&type=${contentType}`;  // Appends the content type to the URL if it's not 'both'.
     }
-
-    // try {
-    //   const response = await fetch(`https://www.omdbapi.com/?s=${searchTitle}&type=${contentType}&page=${page}&apikey=${process.env.REACT_APP_API_KEY}`);
-    //   const data = await response.json();
-    //   if (data.Response === 'True' && data.Search !== null) {
-    //     setMovies(data.Search);
-    //     setTotalPages(Math.ceil(data.totalResults / 10));
-    //   }
-    // } catch (error) {
-    //   console.error('Error fetching data:', error);
-    // } finally {
-    //   setLoading(false);
-    // }
-    
     try {
       const response = await fetch(url);
       const data = await response.json();
       if (data.Response === 'True' && data.Search !== null) {
-        setMovies(data.Search);
-        setTotalPages(Math.ceil(data.totalResults / 10));
+        setMovies(data.Search); // Updates the movies state with the fetched data.
+        setTotalPages(Math.ceil(data.totalResults / 10)); // Calculates and sets the total number of pages.
       }
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -54,31 +65,32 @@ const Movies = () => {
     }
   };
 
-  //  useEffect(() => {
-  //   setCurrentPage(1); // This will reset the page to 1 whenever searchTitle changes
+  // useEffect(() => {
+  //   setCurrentPage(1); // Resets the current page to 1 when the search title changes.
   // }, [searchTitle]);
-
+  
   useEffect(() => {
-    fetchAllMovies(currentPage, contentType);
-  }, [currentPage, contentType]);
+    fetchAllMovies(currentPage, contentType, searchTitle);
+  }, [currentPage, contentType, searchTitle]);
 
   const handleChange = (event, value) => {
     setCurrentPage(value);
   };
 
+  // Handlers to update the content type and reset the current page.
   const handleMoviesClick = () => {
     setContentType('movie');
-    setCurrentPage(1); // This will trigger the useEffect to refetch movies with page 1
+    setCurrentPage(1); // This will trigger to refetch movies with page 1
   };
   
   const handleTVSeriesClick = () => {
     setContentType('series');
-    setCurrentPage(1); // This will trigger the useEffect to refetch movies with page 1
+    setCurrentPage(1); 
   };
 
   const handleAllClick = () => {
     setContentType('both');
-    setCurrentPage(1); // This will trigger the useEffect to refetch movies with page 1
+    setCurrentPage(1); 
   };
 
   return (

@@ -59,7 +59,7 @@ import { CardActionArea } from '@mui/material';
 
 const CardModel = ({ card }) => {
 
-  const [hovered, setHovered] = React.useState(false);
+  const [hovered, setHovered] = React.useState(false); // Initialize state hook for handling hover state of the card
 
   return (
     <div>

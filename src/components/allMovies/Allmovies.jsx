@@ -6,14 +6,15 @@ import Stack from '@mui/material/Stack';
 // console.log(process.env);
 const Allmovies = () => {
 
-    const [movies, setMovies] = useState([]);
-    const [loading, setLoading] = useState(false)
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(0);
+    const [movies, setMovies] = useState([]); // State for storing movies and its setter
+    const [loading, setLoading] = useState(false) // State for loading status
+    const [currentPage, setCurrentPage] = useState(1); // State for current page
+    const [totalPages, setTotalPages] = useState(0); // State for total pages
 
-    const fetchAllMovies = async (page) => {
+    const fetchAllMovies = async (page) => { // Function to fetch movies
         setLoading(true);
 
+        // Try catch block for error handling
         try {
             const response = await fetch(`https://www.omdbapi.com/?s=movie&page=${page}&apikey=${process.env.REACT_APP_API_KEY}`);
             const data = await response.json();
@@ -28,10 +29,12 @@ const Allmovies = () => {
         }
     };
 
+    // useEffect to fetch movies when currentPage changes
     useEffect(() => {
         fetchAllMovies(currentPage);
     }, [currentPage]);
 
+    // Function to handle page change
     const handleChange = (event, value) => {
         setCurrentPage(value);
     };
@@ -39,9 +42,9 @@ const Allmovies = () => {
     return (
         <div className='text-white h-auto w-full'>
             <div>
-               <h1 className=' font-bold text-3xl mb-3 p-7'>All Movies</h1> 
+                <h1 className=' font-bold text-3xl mb-3 p-7'>All Movies</h1>
             </div>
-            
+
             {loading ? (
                 <p>Loading...</p>
             ) : (

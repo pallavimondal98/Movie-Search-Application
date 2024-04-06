@@ -7,9 +7,9 @@ const MovieDetails = () => {
 
     const { id } = useParams(); // Retrieve movie ID from URL parameters
     console.log('params id:', id);
-    const [movieDetails, setMovieDetails] = useState(null);
+    const [movieDetails, setMovieDetails] = useState(null);  // State for storing movie details
 
-    const fetchMovieDetailedData = async () => {
+    const fetchMovieDetailedData = async () => { // Function to fetch detailed movie data
         try {
             const response = await fetch(`https://www.omdbapi.com/?i=${id}&apikey=${process.env.REACT_APP_API_KEY}`);
             const data = await response.json();
@@ -20,6 +20,7 @@ const MovieDetails = () => {
         }
     }
 
+    // useEffect to fetch movie data when 'id' changes
     useEffect(() => {
         fetchMovieDetailedData()
     }, [id]);
